@@ -11,8 +11,8 @@ R version 4.1.2
 Instructions for use (script description)
 For the analysis done in the paper, the scripts should be run in the following order:
 
-DataClean.R 
-This function is used for °∞data cleaning°±
+DataClean.R
+This function is used for ‚Äúdata cleaning‚Äù
 We removed participants who did not make response for more than 20% of trials or made too many mistakes based on the binomial distribution. And truncated the extreme scores (i.e., scores that were 1.5x IQR less than the first quartile or 1.5x IQR more than the third quartile) by replacing them with median - 1.5x IQR and + 1.5x IQR, respectively.
 
 input: EFRes\ *Result.csv
@@ -20,24 +20,24 @@ output: EFFiltered\ef_behav_all.csv
 
 trans.Rmd
 The cleaned dependent measures were then transformed so that a high score represented high ability.
-Input£∫EFFiltered\ef_behav_all.csv
-Output£∫EFFiltered\ef_behav_all_trans.csv
+Input: EFFiltered\ef_behav_all.csv
+Output: EFFiltered\ef_behav_all_trans.csv
 
 regress.m
 This function is used to regress out the effects of age and gender
 
-Input£∫EFFiltered\ef_behav_all_trans.csv 
-Output£∫EFFiltered\ef_behav_all_trans_regress.csv
+Input: EFFiltered\ef_behav_all_trans.csv
+Output: EFFiltered\ef_behav_all_trans_regress.csv
 
 
 normality.Rmd
 This function is used to transform the residuals to Z scores before further EF model estimation.
 
-Input:  EFFiltered\ef_behav_all_trans_regress.csv
+Input: EFFiltered\ef_behav_all_trans_regress.csv
 Output: cfa\data\ef_behav_all_trans_regress_scaled.csv
 
 model_fitting.Rmd
-This function is used to estimate the latent variable models with maximum likelihood estimation by using the °∞lavaan°± package in R software.
+This function is used to estimate the latent variable models with maximum likelihood estimation by using the ‚Äúlavaan‚Äù package in R software.
 Input: cfa\data\ef_behav_all_trans_regress_scaled.csv
 Output: model_fitting.html, cfa\result\factor scores.
 
@@ -53,7 +53,7 @@ This function is modified based on the article that developed the CPM approach (
 High dimensional mediation
 
 This function shows how to use the high-dimensional mediation function(Zhang, 2021).
-Just run °∞read.m°±
+Just run ‚Äúread.m‚Äù
 
 
 
@@ -62,4 +62,3 @@ references
 
 Shen, X. L., Finn, E. S., Scheinost, D., Rosenberg, M. D., Chun, M. M., Papademetris, X., & Constable, R. T. (2017). Using connectome-based predictive modeling to predict individual behavior from brain connectivity. Nat Protoc, 12(3), 506-518. doi:10.1038/nprot.2016.178
 Zhang, Q. (2021). High-Dimensional Mediation Analysis with Applications to Causal Gene Identification. Statistics in Biosciences. doi:10.1007/s12561-021-09328-0
-
