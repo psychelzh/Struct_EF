@@ -1,0 +1,5 @@
+# three-factor model
+# latent variable definitions
+Inhibition =~ AntiSac + StopSignal + Stroop
+Updating =~ KeepTrack + spatialWM + WM3
+Shifting =~ CateSwitch + ShiftColor + ShiftNumber
