@@ -20,20 +20,20 @@ output: EFFiltered\ef_behav_all.csv
 
 trans.Rmd
 The cleaned dependent measures were then transformed so that a high score represented high ability.
-Input£ºEFFiltered\ef_behav_all.csv
-Output£ºEFFiltered\ef_behav_all_trans.csv
+Input: EFFiltered\ef_behav_all.csv
+Output: EFFiltered\ef_behav_all_trans.csv
 
 regress.m
 This function is used to regress out the effects of age and gender
 
-Input£ºEFFiltered\ef_behav_all_trans.csv 
-Output£ºEFFiltered\ef_behav_all_trans_regress.csv
+Input: EFFiltered\ef_behav_all_trans.csv 
+Output: EFFiltered\ef_behav_all_trans_regress.csv
 
 
 normality.Rmd
 This function is used to transform the residuals to Z scores before further EF model estimation.
 
-Input:  EFFiltered\ef_behav_all_trans_regress.csv
+Input: EFFiltered\ef_behav_all_trans_regress.csv
 Output: cfa\data\ef_behav_all_trans_regress_scaled.csv
 
 model_fitting.Rmd
