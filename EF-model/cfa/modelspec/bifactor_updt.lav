@@ -1,0 +1,4 @@
+# bifactor model
+# latent variable definitions
+Common =~ AntiSac + StopSignal + Stroop + CateSwitch + ShiftColor + ShiftNumber + KeepTrack + spatialWM + WM3
+Updating =~ KeepTrack + spatialWM + WM3

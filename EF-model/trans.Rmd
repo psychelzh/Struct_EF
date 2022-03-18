@@ -1,0 +1,112 @@
+---
+title: "trans"
+author: Zhang and Feng
+date: "Updated at `r lubridate::now()`"
+output:
+  html_notebook:
+    theme: readable
+    toc: true
+    number_section: true
+---
+
+```{r load packages and configurations, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+# load packages
+library(tidyverse)
+library(stringr)
+library(psych)
+library(extrafont)
+# configurations ----
+filt_dir <- "EFFiltered"
+sublist <- parse_integer(read_lines(file.path(filt_dir, "100sublist.txt")))
+cfa_dir <- "cfa"
+data_dir <- file.path(cfa_dir, "data")
+```
+
+```{r load data and filter out not used subjects, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+ef_data_raw <- read_csv(file.path(filt_dir, "ef_behav_all.csv")) %>%
+  filter(id %in% sublist) %>%
+  select(-id) %>% 
+  select(AntiSac, StopSignal, Stroop,
+        CateSwitch, ShiftColor, ShiftNumber,
+        KeepTrack, spatialWM, WM3)
+```
+
+```{r data transformation in order that high score -> high ability, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+ef_data_tran <- ef_data_raw %>%
+  mutate(
+    # logit transformation to stabilize
+    AntiSac = asin(sqrt(1 - AntiSac)),
+    CateSwitch = - CateSwitch,
+    KeepTrack = logit((KeepTrack + 1) / 38),
+    ShiftColor = - ShiftColor,
+    ShiftNumber = - ShiftNumber,
+    StopSignal = - StopSignal,
+    Stroop = - Stroop
+  )
+write_csv(ef_data_tran, file.path(filt_dir, "ef_behav_all_trans.csv"))
+```
+
+
+# Descriptive statistics for the transfromed dataset
+
+```{r descriptive statistics, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+describe(ef_data_raw)
+```
+
+# Visualization of distribution of raw data
+
+```{r visualisation of raw data, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ef_data_raw_stack <- gather(ef_data_raw, task, score) %>%
+  mutate(
+    task = factor(
+      task,
+      levels = c(
+        "AntiSac", "StopSignal", "Stroop",
+        "CateSwitch", "ShiftColor", "ShiftNumber",
+        "KeepTrack", "spatialWM", "WM3")
+    )
+  )
+ggplot(ef_data_raw_stack, aes(score, fill = task)) +
+  geom_histogram() +
+  facet_wrap(~ task, scales = "free") +
+  labs(title = "Distribution of raw scores") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(family = "Gill Sans MT", size = 20, hjust = 0.5, margin = margin(b = 20)),
+    axis.title = element_text(family = "Gill Sans MT", size = 16),
+    axis.text = element_text(family = "Gill Sans MT", size = 12),
+    legend.text = element_text(family = "Gill Sans MT", size = 12),
+    strip.text = element_text(family = "Gill Sans MT", size = 16),
+    legend.title = element_text(family = "Gill Sans MT", size = 16),
+    plot.margin = margin(20, 20, 20, 20)
+  )
+```
+
+# Visualization of distribution of transformed data
+
+```{r visualisation transformed data, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ef_data_tran_stack <- gather(ef_data_tran, task, score) %>%
+  mutate(
+    task = factor(
+      task,
+      levels = c(
+        "AntiSac", "StopSignal", "Stroop",
+        "CateSwitch", "ShiftColor", "ShiftNumber",
+        "KeepTrack", "spatialWM", "WM3")
+    )
+  )
+ggplot(ef_data_tran_stack, aes(score, fill = task)) +
+  geom_histogram() +
+  facet_wrap(~ task, scales = "free") +
+  labs(title = "Distribution of transformed scores") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(family = "Gill Sans MT", size = 20, hjust = 0.5, margin = margin(b = 20)),
+    axis.title = element_text(family = "Gill Sans MT", size = 16),
+    axis.text = element_text(family = "Gill Sans MT", size = 12),
+    legend.text = element_text(family = "Gill Sans MT", size = 12),
+    strip.text = element_text(family = "Gill Sans MT", size = 16),
+    legend.title = element_text(family = "Gill Sans MT", size = 16),
+    plot.margin = margin(20, 20, 20, 20)
+  )
+```
