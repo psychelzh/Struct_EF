@@ -15,61 +15,34 @@ R version 4.1.2
 
 For the analysis done in the paper, the scripts should be run in the following order:
 
-* DataClean.R
+* `"DataClean.R"`: This script is used for "data cleaning". We removed participants who did not make response for more than 20% of trials or made too many mistakes based on the binomial distribution. And truncated the extreme scores (i.e., scores that were 1.5x IQR less than the first quartile or 1.5x IQR more than the third quartile) by replacing them with median - 1.5x IQR and + 1.5x IQR, respectively.
+  *   input: EFRes\ *Result.csv
+  *   output: EFFiltered\ef_behav_all.csv
 
-This function is used for "data cleaning"
+* `"trans.Rmd"`: The cleaned dependent measures were then transformed so that a high score represented high ability.
+  * Input: EFFiltered\ef_behav_all.csv
+  * Output: EFFiltered\ef_behav_all_trans.csv
 
-We removed participants who did not make response for more than 20% of trials or made too many mistakes based on the binomial distribution. And truncated the extreme scores (i.e., scores that were 1.5x IQR less than the first quartile or 1.5x IQR more than the third quartile) by replacing them with median - 1.5x IQR and + 1.5x IQR, respectively.
+* `"regress.m"`: This script is used to regress out the effects of age and gender
+  * Input: EFFiltered\ef_behav_all_trans.csv
+  * Output: EFFiltered\ef_behav_all_trans_regress.csv
 
-* input: EFRes\ *Result.csv
+* `"normality.Rmd"`: This script is used to transform the residuals to Z scores before further EF model estimation.
+  * Input: EFFiltered\ef_behav_all_trans_regress.csv
+  * Output: cfa\data\ef_behav_all_trans_regress_scaled.csv
 
-output: EFFiltered\ef_behav_all.csv
-
-* trans.Rmd
-
-The cleaned dependent measures were then transformed so that a high score represented high ability.
-
-Input: EFFiltered\ef_behav_all.csv
-
-Output: EFFiltered\ef_behav_all_trans.csv
-
-* regress.m
-
-This function is used to regress out the effects of age and gender
-
-Input: EFFiltered\ef_behav_all_trans.csv
-
-Output: EFFiltered\ef_behav_all_trans_regress.csv
-
-
-* normality.Rmd
-
-This function is used to transform the residuals to Z scores before further EF model estimation.
-
-Input: EFFiltered\ef_behav_all_trans_regress.csv
-
-Output: cfa\data\ef_behav_all_trans_regress_scaled.csv
-
-* model_fitting.Rmd
-
-This function is used to estimate the latent variable models with maximum likelihood estimation by using the “lavaan” package in R software.
-
-Input: cfa\data\ef_behav_all_trans_regress_scaled.csv
-
-Output: model_fitting.html, cfa\result\factor scores.
+* `"model_fitting.Rmd"`: This script is used to estimate the latent variable models with maximum likelihood estimation by using the {lavaan} package in R software.
+  * Input: cfa\data\ef_behav_all_trans_regress_scaled.csv
+  * Output: model_fitting.html, cfa\result\factor scores.
 
 ## CPM
 
-* BehavioralPrediction.m
-
-This function is modified based on the article that developed the CPM approach (Shen et al., 2017), using brain functional connectivity to predict EF factor scores.
+* `"BehavioralPrediction.m"`: This script is modified based on the article that developed the CPM approach (Shen et al., 2017), using brain functional connectivity to predict EF factor scores.
 
 
 ## High dimensional mediation
 
-This function shows how to use the high-dimensional mediation function(Zhang, 2021).
-
-Just run "read.m"
+* `"read.m"`: This script shows how to use the high-dimensional mediation function(Zhang, 2021).
 
 ## References
 
