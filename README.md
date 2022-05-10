@@ -77,4 +77,5 @@ Just run "read.m"
 # References
 
 Shen, X. L., Finn, E. S., Scheinost, D., Rosenberg, M. D., Chun, M. M., Papademetris, X., & Constable, R. T. (2017). Using connectome-based predictive modeling to predict individual behavior from brain connectivity. Nat Protoc, 12(3), 506-518. doi:10.1038/nprot.2016.178
+
 Zhang, Q. (2021). High-Dimensional Mediation Analysis with Applications to Causal Gene Identification. Statistics in Biosciences. doi:10.1007/s12561-021-09328-0
